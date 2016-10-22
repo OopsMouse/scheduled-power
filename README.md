@@ -1,12 +1,38 @@
-## Scheduled Power on AWS Lambda
+## EC2 Scheduled Power with AWS Lambda
 
-Automatically power on and power off your instance.
+EC2インスタンスを自動的に起動・停止するAWS Lambda Functionです．
 
-### How to use
+### 使い方
 
-Plase set tag of your instance.
+以下の図のようにEC2インスタンスにタグを追加して下さい。
 
-| tag name | format |
-|:---------:|:------:|
-| `PowerOn` | `1:00 pm`,`1:00 p.m.`,`1:00 p`,`1:00pm`, `1:00p.m.`,`1:00p`,`1 pm`,`1 p.m.`,`1 p`,`1pm`,`1p.m.`, `1p`,`13:00`,`13` |
-| `PowerOff` | `1:00 pm`,`1:00 p.m.`,`1:00 p`,`1:00pm`, `1:00p.m.`,`1:00p`,`1 pm`,`1 p.m.`,`1 p`,`1pm`,`1p.m.`, `1p`,`13:00`,`13` |
+![](tag.png)
+
+#### 使える時間フォーマット
+
+以下のフォーマットで記載することができます。
+現在、JSTのみ対応しています。
+
+- `1:00 pm`
+- `1:00 p.m.`
+- `1:00 p`
+- `1:00pm`
+- `1:00p.m.`
+- `1:00p`
+- `1 pm`
+- `1 p.m.`
+- `1 p`
+- `1pm`
+- `1p.m.`
+- `1p`
+- `13:00`
+- `13`
+
+#### 注意
+
+現在、`AutoScalingGroup`で追加されたEC2インスタンスには対応できていません。
+
+### TODO
+
+- `AutoScalingGroup`へ対応
+- 複数のTime Zoneに対応
