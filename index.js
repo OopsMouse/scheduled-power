@@ -19,13 +19,20 @@ exports.handler = function(event, context, callback) {
     callback(null, 'success');
   }
 
+  var getJSTNowDate = function () {
+    var offset = 9;
+    var d = new Date();
+    utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    return new Date(utc + (3600000 * offset));
+  }
+
   var parseTime = function (timeString) {
     if (null === timeString) {
       return null;
     }
 
     try {
-      var date = new Date();
+      var date = getJSTNowDate();
       var time = timeString.match(/(\d+)(?::(\d\d))?\s*(p?)/);
       date.setHours( parseInt(time[1]) + (time[3] ? 12 : 0) );
       date.setMinutes( parseInt(time[2]) || 0 );
@@ -73,12 +80,15 @@ exports.handler = function(event, context, callback) {
       return succeed();
     }
 
-    var now = new Date();
+    var now = getJSTNowDate();
 
     var powerOnTargets = instances.filter(function (instance) {
       if (instance.state !== 'stopped' || null === instance.powerOnDate) {
         return false;
       }
+
+      console.log('instance power on date: ' + instance.powerOnDate);
+      console.log('now date: ' + now);
 
       if (null === instance.powerOffDate) {
         return instance.powerOnDate.getTime() < now.getTime();
@@ -95,6 +105,9 @@ exports.handler = function(event, context, callback) {
         return false;
       }
 
+      console.log('instance power off date: ' + instance.powerOffDate);
+      console.log('now date: ' + now);
+      
       return instance.powerOffDate.getTime() < now.getTime();
     }).map(function (instance) {
       return instance.id;
