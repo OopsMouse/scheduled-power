@@ -6,17 +6,17 @@ AWS.config.update({region:'ap-northeast-1'});
 
 var DryRun = process.env.DRY_RUN || false;
 
-exports.handler = function(event, context) {
+exports.handler = function(event, context, callback) {
   var ec2 = new AWS.EC2()
     , d   = domain.create();
 
   d.on('error', function (err) {
     console.error(err, err.stack);
-    return context.done('error', err.stack);
+    return callback(error);
   });
 
   var succeed = function () {
-    context.done(null, 'success');
+    callback(null, 'success');
   }
 
   var parseTime = function (timeString) {

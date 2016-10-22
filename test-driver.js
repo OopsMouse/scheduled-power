@@ -13,4 +13,9 @@ var context = {
 };
 
 var lambda = require("./index");
-lambda.handler({}, context);
+lambda.handler({}, {}, function (err, message) {
+  if (err) {
+    return console.error(err);
+  }
+  console.log(message);
+});
