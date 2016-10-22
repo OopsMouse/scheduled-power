@@ -1,0 +1,13 @@
+{
+  "name": "scheduled-power",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test-driver.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.1.2",
+    "aws-sdk": "^2.6.11"
+  }
+}
